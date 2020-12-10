@@ -1,72 +1,59 @@
-# Echo server program
-from socket import * 
+# Echo client program
+from socket import *
 from numpy import *
 import matplotlib.pyplot as plt
 import math
 
 HOST = '127.0.0.1'
 PORT = 50007
-s = None
+s = socket(AF_INET, SOCK_STREAM)
 
-def formatParam(param):
-    p = param.split(',')
-    a, b, N, teta, omega, l = int(p[0]), int(p[1]), int(p[2]), pi/int(p[3]), int(p[4]), int(p[5])
-    return a, b, N, teta, omega, l
+s.connect((HOST, PORT))
+params = "0,10,2000,12,0,4"
+with s:
+    processingTime = 1
+    s.sendall(bytes(params, "utf8"))
+    data = s.recv(64000)
+    dados = repr(data).split("|")
+    # print(dados)
+    x = []
+    pos = []
+    vel = []
+    px = []
+    py = []
+    for d in dados[1: len(dados) - 1]:
+        aux_x, aux_pos, aux_vel, aux_px, aux_py = d.split(",")
 
-def rungeKutta(a = 0, b = 10, N = 2000, teta = pi/12, omega = 0, l = 4):
-    data = "|"
-    pos = ""
-    vel = ""
-    x = ""
-    px = ""
-    py = ""
-    g = 9.81
-    cnt = 0
-    h = (b-a)/N
+        x.append(float(aux_x))
+        pos.append(float(aux_pos))
+        vel.append(float(aux_vel))
+        px.append(float(aux_px))
+        py.append(float(aux_py))
 
-    for i in range(1, N):
-        data = data + str(cnt) + ", " + str(teta) + ", " + str(omega) + ", " + str(l*sin(teta)) + ", " + str(-l*cos(teta)) + "|"
-        x = x + str(cnt) + ", "
-        pos = pos + str(teta) + ", "
-        vel = vel + str(omega) + ", "
+    for val in px:
+        print(val)
 
-        px = px + str(l*sin(teta)) + ", " + str(-l*cos(teta)) + " - "
-        py = py + str(-l*cos(teta)) + ", "
-        
-        v1 = h*(-g/l*sin(teta))
-        p1 = h*omega
-        
-        v2 = h*(-g/l*sin(teta + v1/2))
-        p2 = h*(omega + p1/2)
+    print("----------------------------")
 
-        v3 = h*(-g/l*sin(teta + v2/2))
-        p3 = h*(omega + p2/2)
+    for val in py:
+        print(val)
 
-        v4 = h*(-g/l*sin(teta + v3))
-        p4 = h*(omega + p3)
+    print("----------------------------")
+    plt.figure(figsize=(12,6))
+    plt.subplot(111),plt.plot(x, pos, 'green'),plt.xlabel('Teta (verde) - Omega (vermelho)'),plt.ylabel('posicao')
+    plt.subplot(111),plt.plot(x, vel, 'red')
+    plt.grid(color='black', linestyle='-', linewidth = 0.2)
 
-        omega = omega + (v1 + 2*v2 + 2*v3 + v4)/6
-        teta = teta + (p1 + 2*p2 + 2*p3 + p4)/6
-        cnt = i*h
-    return bytes(data, "utf8")
+    plt.figure(figsize=(12,9))
+    plt.subplot(312),plt.plot(px, py, 'blue'),plt.xlabel('Rota do pêndulo'),plt.ylabel('pos')
+
+    plt.grid(color='black', linestyle='-', linewidth = 0.2)
+    plt.show()
 
 
-# create an INET, STREAMing socket
-serversocket = socket(AF_INET, SOCK_STREAM)
-# bind the socket to a public host, and a well-known port
-serversocket.bind((HOST, 50007))
-# become a server socket
-serversocket.listen(5)
+#print('Received', repr(data).split(","))
 
-while True:
-    # accept connections from outside
-    (clientsocket, address) = serversocket.accept()
-    param = clientsocket.recv(64000) 
-    a, b, N, teta, omega, l = formatParam(param.decode())
-    data = rungeKutta(a, b, N, teta, omega, l)
-    clientsocket.send(data)
-    break
-    # now do something with the clientsocket
-    # in this case, we'll pretend this is a threaded server
-    # ct = client_thread(clientsocket)
-    # ct.run()
+def format(data):
+    return data.split(",")[1]
+
+# x, pos, vel, px, py = format(data)
