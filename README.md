@@ -29,19 +29,19 @@ close()        // desaloca o descritor de arquivo
 
 
 
-Criar objeto socket 
+Criar objeto socket:
 
 Criamos um objeto do tipo socket usando o método socket(), o qual recebe dois ou três parâmetros.
 
-Família de endereços
+Família de endereços:
 AF_INET(endereço IPv4)
-Tipo de socket
+Tipo de socket:
 SOCK_STREAM (para socket TCP)
 
-Interfaces de sockets 
+Interfaces de sockets:
+
 A interface de um socket se diferencia pelos diferentes serviços que são fornecidos 
 
 Interface de sockets de fluxo(stream). Define um serviço orientado a conexão confiável (TCP). Dados são enviados sem erros ou duplicação e recebidos na mesma ordem em que foram enviados. SOCK_STREAM
-
 
 Neste trabalho o protocolo de transporte usado foi TCP pois é mais confiável e garante a entrega das informações. O protocolo TCP possui algumas vantagens. Os sockets do tipo TCP são orientados a conexão e tem um canal exclusivo de comunicação entre cliente e servidor. Eles garantem a ordem dos pacotes, são considerados confiáveis e sem perda. No entanto, quando se trata de se recuperar de falhas e perda de pacotes ele é mais burocrático e lento.
