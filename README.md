@@ -19,12 +19,19 @@ O programa servidor também utiliza a mesma API de sockets. Ou seja, inicialment
 Principais funções para escrever programas com sockets:
  
 socket()       // Cria um socket e retorna o descritor de arquivo
+
 bind()         // Associa o socket a um endereço socket e uma porta
+
 connect()      // Tenta estabelecer uma conexão com um socket
+
 listen()       // Coloca o socket para aguardar conexões
+
 accept()       // Aceita uma nova conexão e cria um socket
+
 send()         // caso conectado, transmite mensagens ao socket
+
 recv()         // recebe as mensagens através do socket 
+
 close()        // desaloca o descritor de arquivo
 
 
