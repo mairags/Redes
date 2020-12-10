@@ -1,6 +1,10 @@
 # Redes
 Terceiro credito da disciplina Redes de Computadores 1
 
+Alunos: Maira Gomes Santos e Joao Henrique dos Santos Queiroz
+
+Descrição:
+
 Uma rede de computadores caracteriza-se por dois ou mais computadores interligados, não importando por qual meio (cabos, ondas de rádio etc), desde que sejam capazes de trocar informações entre si e/ou compartilhar seus recursos de hardware. Uma rede funciona sob protocolos (que são regras que definem o funcionamento dela) e a família de protocolos mais conhecida e utilizada é a TCP/IP, que engloba os protocolos IP (da camada de rede), TCP e UDP (da camada de transporte), HTTP (da camada de aplicação) entre outros.
 
 Cliente: 
