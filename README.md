@@ -35,6 +35,7 @@ Criamos um objeto do tipo socket usando o método socket(), o qual recebe dois o
 
 Família de endereços:
 AF_INET(endereço IPv4)
+
 Tipo de socket:
 SOCK_STREAM (para socket TCP)
 
